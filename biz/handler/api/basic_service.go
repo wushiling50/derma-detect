@@ -34,7 +34,6 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	// TODO:
 	// 发给业务层
 	userResp, err := user.NewUserService(ctx).CreateUser(&req)
 
@@ -45,6 +44,7 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 	}
 
 	token, err := utils.CreateToken(userResp.Id)
+
 	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
@@ -70,13 +70,16 @@ func UserLogin(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(api.UserLoginResponse)
 
+	// 对传入的数据做判断
 	if len(req.Username) == 0 || len(req.Username) > 255 || len(req.Password) == 0 || len(req.Password) > 255 {
 		pack.SendFailResponse(c, errno.ParamError)
 		return
 	}
 
+	// 发给业务层
 	userResp, err := service.NewUserService(ctx).CheckUser(&req)
 
+	// 包装返回值
 	if err != nil {
 		pack.SendFailResponse(c, err)
 		return

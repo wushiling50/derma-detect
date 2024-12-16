@@ -10,20 +10,23 @@ import (
 )
 
 type User struct {
-	Id              int64
-	Username        string
-	Password        string
-	Avatar          string `gorm:"default:https://s2.loli.net/2024/01/02/bhezZY4OPAFDHd2.jpg"`
-	BackgroundImage string `gorm:"default:https://s2.loli.net/2024/01/02/bhezZY4OPAFDHd2.jpg"`
-	Signature       string `gorm:"default:NOT NULL BUT SEEMS NULL"`
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
-	DeletedAt       gorm.DeletedAt `gorm:"index"`
+	Id        int64
+	Username  string
+	Password  string
+	Avatar    string `gorm:"default:https://s2.loli.net/2024/01/02/bhezZY4OPAFDHd2.jpg"`
+	Signature string `gorm:"default:NOT NULL BUT SEEMS NULL"`
+	Email     string
+	Phone     int64
+	Birth     time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 func CreateUser(ctx context.Context, user *User) (*User, error) {
 	userResp := new(User)
 
+	user.Id = SF.NextVal()
 	err := DB.WithContext(ctx).Where("username = ?", user.Username).First(&userResp).Error
 
 	if err == nil {

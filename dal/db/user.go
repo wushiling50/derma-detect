@@ -17,7 +17,7 @@ type User struct {
 	Signature string `gorm:"default:NOT NULL BUT SEEMS NULL"`
 	Email     string
 	Phone     int64
-	Birth     time.Time
+	Birth     string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
@@ -77,4 +77,33 @@ func GetUserByID(ctx context.Context, userid int64) (*User, error) {
 	}
 
 	return userResp, nil
+}
+
+func ResetInfo(ctx context.Context, userModel *User) error {
+	err := DB.Save(userModel).Error
+
+	if err != nil {
+		// add some logs
+
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return errno.UserNotFoundError
+		}
+		return err
+	}
+	return nil
+}
+
+func ResetPassword(ctx context.Context, id int64, password string) error {
+	err := DB.WithContext(ctx).Model(&User{}).Where("id= ?", id).
+		Update("password", password).Error
+
+	if err != nil {
+		// add some logs
+
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return errno.UserNotFoundError
+		}
+		return err
+	}
+	return nil
 }

@@ -24,12 +24,28 @@ func Register(r *server.Hertz) {
 			{
 				_user := _detect.Group("/user", _userMw()...)
 				{
+					_history := _user.Group("/history", _historyMw()...)
+					_history.GET("/", append(_userhistoryMw(), api.UserHistory)...)
+				}
+				{
+					_info := _user.Group("/info", _infoMw()...)
+					_info.GET("/", append(_userinfoMw(), api.UserInfo)...)
+				}
+				{
 					_login := _user.Group("/login", _loginMw()...)
 					_login.POST("/", append(_userloginMw(), api.UserLogin)...)
 				}
 				{
 					_register := _user.Group("/register", _registerMw()...)
 					_register.POST("/", append(_userregisterMw(), api.UserRegister)...)
+				}
+				{
+					_reset_info := _user.Group("/reset-info", _reset_infoMw()...)
+					_reset_info.POST("/", append(_resetinfoMw(), api.ResetInfo)...)
+				}
+				{
+					_reset_password := _user.Group("/reset-password", _reset_passwordMw()...)
+					_reset_password.POST("/", append(_resetpasswordMw(), api.ResetPassword)...)
 				}
 			}
 		}

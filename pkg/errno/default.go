@@ -10,7 +10,11 @@ var (
 	AuthorizationFailedError = NewErrNo(AuthorizationFailedErrCode, "authorization failed")
 
 	// User
-	UserExistedError = NewErrNo(ParamErrorCode, "user existed")
+	UserExistedError  = NewErrNo(ParamErrorCode, "user existed")
+	PasswordDiffError = NewErrNo(ParamErrorCode, "password different")
+	PasswordSameError = NewErrNo(ParamErrorCode, "new password same as old password")
+	EamilFormatError  = NewErrNo(ParamErrorCode, "invaild email address")
+	PhoneFormatError  = NewErrNo(ParamErrorCode, "invaild phone number")
 
 	// other
 	UnexpectedTypeError     = NewErrNo(UnexpectedTypeErrorCode, "unexpected type")

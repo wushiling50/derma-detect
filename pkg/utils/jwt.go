@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"derma/detect/pkg/constants"
+	"derma/detect/pkg/errno"
 
 	"github.com/golang-jwt/jwt"
 )
@@ -41,5 +42,5 @@ func CheckToken(token string) (*Claims, error) {
 		return resp, nil
 	}
 
-	return nil, err
+	return nil, errno.AuthorizationFailedError
 }

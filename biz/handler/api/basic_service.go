@@ -9,7 +9,7 @@ import (
 	"derma/detect/pack"
 	"derma/detect/pkg/errno"
 	"derma/detect/pkg/utils"
-	service "derma/detect/service/user"
+
 	user "derma/detect/service/user"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -77,7 +77,7 @@ func UserLogin(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 发给业务层
-	userResp, err := service.NewUserService(ctx).CheckUser(&req)
+	userResp, err := user.NewUserService(ctx).CheckUser(&req)
 
 	// 包装返回值
 	if err != nil {
@@ -95,6 +95,141 @@ func UserLogin(ctx context.Context, c *app.RequestContext) {
 	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
 	resp.UserID = userResp.Id
 	resp.Token = token
+
+	pack.SendResponse(c, resp)
+}
+
+// UserInfo .
+// @router /derma/detect/user/info/ [GET]
+func UserInfo(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.UserInfoRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp := new(api.UserInfoResponse)
+
+	// 对传入的数据做判断
+	if _, err := utils.CheckToken(req.Token); err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	// 发给业务层
+	userResp, err := user.NewUserService(ctx).GetInfo(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
+	resp.User = pack.User(userResp)
+
+	pack.SendResponse(c, resp)
+}
+
+// ResetInfo .
+// @router /derma/detect/user/reset-info/ [POST]
+func ResetInfo(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.ResetInfoRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp := new(api.ResetInfoResponse)
+
+	// 对传入的数据做判断
+	if _, err := utils.CheckToken(req.Token); err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	if len(*req.Username) == 0 || len(*req.Username) > 255 {
+		pack.SendFailResponse(c, errno.ParamError)
+		return
+	}
+
+	if err = utils.CheckEmail(*req.Email); err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	if err = utils.CheckPhoneNum(*req.Phone); err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	// 发给业务层
+	err = user.NewUserService(ctx).ResetInfo(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
+
+	pack.SendResponse(c, resp)
+}
+
+// ResetPassword .
+// @router /derma/detect/user/reset-password/ [POST]
+func ResetPassword(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.ResetPasswordRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp := new(api.ResetPasswordResponse)
+
+	// 对传入的数据做判断
+	if _, err := utils.CheckToken(req.Token); err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	if req.CheckPassword != req.NewPassword {
+		pack.SendFailResponse(c, errno.PasswordDiffError)
+		return
+	}
+
+	if req.NewPassword == req.OldPassword {
+		pack.SendFailResponse(c, errno.PasswordSameError)
+		return
+	}
+
+	// 发给业务层
+	err = user.NewUserService(ctx).ResetPassword(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
+
+	pack.SendResponse(c, resp)
+}
+
+// UserHistory .
+// @router /derma/detect/user/history/ [GET]
+func UserHistory(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.HistoryRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp := new(api.HistoryResponse)
 
 	pack.SendResponse(c, resp)
 }

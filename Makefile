@@ -12,3 +12,7 @@ env-down:
 .PHONY: run
 run:
 	go build -o derma && ./derma
+
+.PHONY: update
+update:
+	hz update -idl api.thrift

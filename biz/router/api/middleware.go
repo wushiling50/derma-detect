@@ -45,3 +45,43 @@ func _userregisterMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _historyMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _userhistoryMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _infoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _userinfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _reset_infoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _resetinfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _reset_passwordMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _resetpasswordMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

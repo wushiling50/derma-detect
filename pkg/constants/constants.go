@@ -18,4 +18,8 @@ const (
 
 	// db table name
 	UserTableName = "user"
+
+	// oss
+	AvatarMainDir  = "avatar"
+	PictureMainDir = "picture"
 )

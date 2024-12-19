@@ -1,0 +1,19 @@
+server: # 项目配置
+  port: :8888 # 项目端口
+  version: 1.0 
+  jwtSecret:
+
+mysql:
+  driverName: mysql
+  host: 127.0.0.1
+  port: 3306
+  dbName: derma
+  username: derma
+  password: derma
+  charset: utf8mb4
+
+oss:
+  endpoint: 
+  accessKey-id: 
+  accessKey-secret: 
+  bucketname: 

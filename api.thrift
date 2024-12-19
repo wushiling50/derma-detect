@@ -14,6 +14,8 @@ struct Picture {
     1: i64 id,
     2: string picture_url,
     3: string create_date,
+    4: string percent,
+    5: string describe,
 }
 
 struct UserRegisterRequest {
@@ -75,6 +77,28 @@ struct ResetPasswordResponse {
     2: optional string status_msg,
 }
 
+struct UploadAvatarRequest {
+    1: required string token,
+    2: required binary avatar,
+}
+
+struct UploadAvatarResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required string avatar_url,
+}
+
+struct UploadPictureRequest {
+    1: required string token,
+    2: required binary picture,
+}
+
+struct UploadPictureResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required list<Picture> result_list,
+}
+
 struct HistoryRequest {
     1: required string token,
 }
@@ -92,6 +116,11 @@ service BasicService {
     UserInfoResponse UserInfo(1: UserInfoRequest req) (api.get="/derma/detect/user/info/")
     ResetInfoResponse ResetInfo(1: ResetInfoRequest req) (api.post="/derma/detect/user/reset-info/")
     ResetPasswordResponse ResetPassword(1: ResetPasswordRequest req) (api.post="/derma/detect/user/reset-password/")
+    
+    UploadAvatarResponse UploadAvatar(1:UploadAvatarRequest req) (api.post="/derma/detect/user/upload-avatar/")
+}
 
-    HistoryResponse UserHistory(1: HistoryRequest req) (api.get="/derma/detect/user/history/")
+service PictureService {
+    HistoryResponse UserHistory(1: HistoryRequest req) (api.get="/derma/detect/picture/history/")
+    UploadPictureResponse UploadPicture(1: UploadPictureRequest req) (api.post="/derma/detect/picture/upload/")
 }

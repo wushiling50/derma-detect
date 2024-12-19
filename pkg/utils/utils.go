@@ -1,21 +1,22 @@
 package utils
 
 import (
+	"derma/detect/config"
 	"derma/detect/pkg/errno"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
-
-	"github.com/spf13/viper"
+	"time"
 )
 
 func GetMysqlDSN() string {
-	host := viper.GetString("mysql.host")
-	port := viper.GetString("mysql.port")
-	dbName := viper.GetString("mysql.dbName")
-	username := viper.GetString("mysql.username")
-	password := viper.GetString("mysql.password")
-	charset := viper.GetString("mysql.charset")
+	host := config.MYSQL.Host
+	port := config.MYSQL.Port
+	dbName := config.MYSQL.DbName
+	username := config.MYSQL.Username
+	password := config.MYSQL.Password
+	charset := config.MYSQL.Charset
 
 	dsn := strings.Join([]string{username, ":", password, "@tcp(", host, ":", port, ")/", dbName, "?charset=" + charset + "&parseTime=true"}, "")
 
@@ -49,4 +50,20 @@ func CheckEmail(email string) error {
 	}
 
 	return nil
+}
+
+func GenerateAvatarName(userID int64) string {
+	currentTime := time.Now()
+	// 获取年月日和小时分钟
+	year, month, day := currentTime.Date()
+	hour, minute := currentTime.Hour(), currentTime.Minute()
+	return fmt.Sprintf("%v_%d%02d%02d_%02d%02d_avatar.jpg", userID, year, month, day, hour, minute)
+}
+
+func GeneratePictureName(userID int64) string {
+	currentTime := time.Now()
+	// 获取年月日和小时分钟
+	year, month, day := currentTime.Date()
+	hour, minute := currentTime.Hour(), currentTime.Minute()
+	return fmt.Sprintf("%v_%d%02d%02d_%02d%02d_picture.jpg", userID, year, month, day, hour, minute)
 }

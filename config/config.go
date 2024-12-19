@@ -15,4 +15,10 @@ func InitConfig() {
 	if err != nil {
 		panic(err)
 	}
+	Init()
+}
+
+func Init() {
+	MysqlInit()
+	OssInit()
 }

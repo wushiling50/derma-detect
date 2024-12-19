@@ -107,3 +107,18 @@ func ResetPassword(ctx context.Context, id int64, password string) error {
 	}
 	return nil
 }
+
+func RestAvatar(ctx context.Context, id int64, url string) error {
+	err := DB.WithContext(ctx).Model(&User{}).Where("id= ?", id).
+		Update("avatar", url).Error
+
+	if err != nil {
+		// add some logs
+
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return errno.UserNotFoundError
+		}
+		return err
+	}
+	return nil
+}

@@ -22,11 +22,18 @@ func Register(r *server.Hertz) {
 		{
 			_detect := _derma.Group("/detect", _detectMw()...)
 			{
-				_user := _detect.Group("/user", _userMw()...)
+				_picture := _detect.Group("/picture", _pictureMw()...)
 				{
-					_history := _user.Group("/history", _historyMw()...)
+					_history := _picture.Group("/history", _historyMw()...)
 					_history.GET("/", append(_userhistoryMw(), api.UserHistory)...)
 				}
+				{
+					_upload := _picture.Group("/upload", _uploadMw()...)
+					_upload.POST("/", append(_uploadpictureMw(), api.UploadPicture)...)
+				}
+			}
+			{
+				_user := _detect.Group("/user", _userMw()...)
 				{
 					_info := _user.Group("/info", _infoMw()...)
 					_info.GET("/", append(_userinfoMw(), api.UserInfo)...)
@@ -46,6 +53,10 @@ func Register(r *server.Hertz) {
 				{
 					_reset_password := _user.Group("/reset-password", _reset_passwordMw()...)
 					_reset_password.POST("/", append(_resetpasswordMw(), api.ResetPassword)...)
+				}
+				{
+					_upload_avatar := _user.Group("/upload-avatar", _upload_avatarMw()...)
+					_upload_avatar.POST("/", append(_uploadavatarMw(), api.UploadAvatar)...)
 				}
 			}
 		}

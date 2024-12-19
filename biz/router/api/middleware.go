@@ -85,3 +85,28 @@ func _resetpasswordMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _pictureMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _uploadMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _uploadpictureMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _upload_avatarMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _uploadavatarMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

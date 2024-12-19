@@ -113,13 +113,14 @@ func UserInfo(ctx context.Context, c *app.RequestContext) {
 	resp := new(api.UserInfoResponse)
 
 	// 对传入的数据做判断
-	if _, err := utils.CheckToken(req.Token); err != nil {
+	claim, err := utils.CheckToken(req.Token)
+	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
 	}
 
 	// 发给业务层
-	userResp, err := user.NewUserService(ctx).GetInfo(&req)
+	userResp, err := user.NewUserService(ctx).GetInfo(&req, claim.UserId)
 	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
@@ -145,7 +146,8 @@ func ResetInfo(ctx context.Context, c *app.RequestContext) {
 	resp := new(api.ResetInfoResponse)
 
 	// 对传入的数据做判断
-	if _, err := utils.CheckToken(req.Token); err != nil {
+	claim, err := utils.CheckToken(req.Token)
+	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
 	}
@@ -166,7 +168,7 @@ func ResetInfo(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 发给业务层
-	err = user.NewUserService(ctx).ResetInfo(&req)
+	err = user.NewUserService(ctx).ResetInfo(&req, claim.UserId)
 	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
@@ -191,7 +193,8 @@ func ResetPassword(ctx context.Context, c *app.RequestContext) {
 	resp := new(api.ResetPasswordResponse)
 
 	// 对传入的数据做判断
-	if _, err := utils.CheckToken(req.Token); err != nil {
+	claim, err := utils.CheckToken(req.Token)
+	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
 	}
@@ -207,7 +210,7 @@ func ResetPassword(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 发给业务层
-	err = user.NewUserService(ctx).ResetPassword(&req)
+	err = user.NewUserService(ctx).ResetPassword(&req, claim.UserId)
 	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
@@ -218,18 +221,34 @@ func ResetPassword(ctx context.Context, c *app.RequestContext) {
 	pack.SendResponse(c, resp)
 }
 
-// UserHistory .
-// @router /derma/detect/user/history/ [GET]
-func UserHistory(ctx context.Context, c *app.RequestContext) {
+// UploadAvatar .
+// @router /derma/detect/user/upload-avatar/ [POST]
+func UploadAvatar(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req api.HistoryRequest
+	var req api.UploadAvatarRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		pack.SendFailResponse(c, err)
 		return
 	}
 
-	resp := new(api.HistoryResponse)
+	resp := new(api.UploadAvatarResponse)
+	// 对传入的数据做判断
+	claim, err := utils.CheckToken(req.Token)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	// 发给业务层
+	url, err := user.NewUserService(ctx).UploadAvatar(&req, claim.UserId)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
+	resp.AvatarURL = url
 
 	pack.SendResponse(c, resp)
 }

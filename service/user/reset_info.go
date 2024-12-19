@@ -3,18 +3,12 @@ package service
 import (
 	"context"
 	api "derma/detect/biz/model/api"
-	"derma/detect/pkg/utils"
 
 	"derma/detect/dal/db"
 )
 
-func (s *UserService) ResetInfo(req *api.ResetInfoRequest) error {
-	claim, err := utils.CheckToken(req.Token)
-	if err != nil {
-		return err
-	}
-
-	userModel, err := compareInfo(s.ctx, claim.UserId, req)
+func (s *UserService) ResetInfo(req *api.ResetInfoRequest, userID int64) error {
+	userModel, err := compareInfo(s.ctx, userID, req)
 	if err != nil {
 		return err
 	}

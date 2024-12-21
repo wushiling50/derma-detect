@@ -3176,8 +3176,7 @@ func (p *ResetPasswordResponse) String() string {
 }
 
 type UploadAvatarRequest struct {
-	Token  string `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
-	Avatar []byte `thrift:"avatar,2,required" form:"avatar,required" json:"avatar,required" query:"avatar,required"`
+	Token string `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
 }
 
 func NewUploadAvatarRequest() *UploadAvatarRequest {
@@ -3188,13 +3187,8 @@ func (p *UploadAvatarRequest) GetToken() (v string) {
 	return p.Token
 }
 
-func (p *UploadAvatarRequest) GetAvatar() (v []byte) {
-	return p.Avatar
-}
-
 var fieldIDToName_UploadAvatarRequest = map[int16]string{
 	1: "token",
-	2: "avatar",
 }
 
 func (p *UploadAvatarRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -3202,7 +3196,6 @@ func (p *UploadAvatarRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetToken bool = false
-	var issetAvatar bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -3227,15 +3220,6 @@ func (p *UploadAvatarRequest) Read(iprot thrift.TProtocol) (err error) {
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetAvatar = true
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -3251,11 +3235,6 @@ func (p *UploadAvatarRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetToken {
 		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetAvatar {
-		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -3285,15 +3264,6 @@ func (p *UploadAvatarRequest) ReadField1(iprot thrift.TProtocol) error {
 	}
 	return nil
 }
-func (p *UploadAvatarRequest) ReadField2(iprot thrift.TProtocol) error {
-
-	if v, err := iprot.ReadBinary(); err != nil {
-		return err
-	} else {
-		p.Avatar = []byte(v)
-	}
-	return nil
-}
 
 func (p *UploadAvatarRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -3303,10 +3273,6 @@ func (p *UploadAvatarRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 	}
@@ -3342,23 +3308,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *UploadAvatarRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("avatar", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteBinary([]byte(p.Avatar)); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *UploadAvatarRequest) String() string {
@@ -3622,8 +3571,7 @@ func (p *UploadAvatarResponse) String() string {
 }
 
 type UploadPictureRequest struct {
-	Token   string `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
-	Picture []byte `thrift:"picture,2,required" form:"picture,required" json:"picture,required" query:"picture,required"`
+	Token string `thrift:"token,1,required" form:"token,required" json:"token,required" query:"token,required"`
 }
 
 func NewUploadPictureRequest() *UploadPictureRequest {
@@ -3634,13 +3582,8 @@ func (p *UploadPictureRequest) GetToken() (v string) {
 	return p.Token
 }
 
-func (p *UploadPictureRequest) GetPicture() (v []byte) {
-	return p.Picture
-}
-
 var fieldIDToName_UploadPictureRequest = map[int16]string{
 	1: "token",
-	2: "picture",
 }
 
 func (p *UploadPictureRequest) Read(iprot thrift.TProtocol) (err error) {
@@ -3648,7 +3591,6 @@ func (p *UploadPictureRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetToken bool = false
-	var issetPicture bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -3673,15 +3615,6 @@ func (p *UploadPictureRequest) Read(iprot thrift.TProtocol) (err error) {
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetPicture = true
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -3697,11 +3630,6 @@ func (p *UploadPictureRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetToken {
 		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetPicture {
-		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -3731,15 +3659,6 @@ func (p *UploadPictureRequest) ReadField1(iprot thrift.TProtocol) error {
 	}
 	return nil
 }
-func (p *UploadPictureRequest) ReadField2(iprot thrift.TProtocol) error {
-
-	if v, err := iprot.ReadBinary(); err != nil {
-		return err
-	} else {
-		p.Picture = []byte(v)
-	}
-	return nil
-}
 
 func (p *UploadPictureRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -3749,10 +3668,6 @@ func (p *UploadPictureRequest) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 	}
@@ -3788,23 +3703,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *UploadPictureRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("picture", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteBinary([]byte(p.Picture)); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *UploadPictureRequest) String() string {

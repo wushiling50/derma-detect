@@ -1,22 +1,23 @@
-package service
+package user
 
 import (
 	"bytes"
-	api "derma/detect/biz/model/api"
 	"derma/detect/dal/db"
 	"derma/detect/pkg/constants"
 	"derma/detect/pkg/utils"
 )
 
-func (s *UserService) UploadAvatar(req *api.UploadAvatarRequest, userID int64) (string, error) {
+func (s *UserService) UploadAvatar(byteContainer []byte, userID int64) (string, error) {
 	avatarName := utils.GenerateAvatarName(userID)
-	fileReader := bytes.NewReader(req.Avatar)
-	url := "https://" + constants.AvatarMainDir + "/" + avatarName
+	fileReader := bytes.NewReader(byteContainer)
 
-	err := s.bucket.PutObject(constants.AvatarMainDir+"/"+avatarName, fileReader)
+	objectKey := constants.AvatarMainDir + "/" + avatarName
+
+	err := s.bucket.PutObject(objectKey, fileReader)
 	if err != nil {
 		return "", err
 	}
 
+	url := utils.GetAvatarURL(objectKey)
 	return url, db.RestAvatar(s.ctx, userID, url)
 }

@@ -15,9 +15,14 @@ var (
 	PasswordSameError = NewErrNo(ParamErrorCode, "new password same as old password")
 	EamilFormatError  = NewErrNo(ParamErrorCode, "invaild email address")
 	PhoneFormatError  = NewErrNo(ParamErrorCode, "invaild phone number")
+	AvatarUploadError = NewErrNo(FileErrorCode, "avatar upload error")
+
+	// Picture
+	PictureUploadError = NewErrNo(FileErrorCode, "image upload error")
 
 	// other
 	UnexpectedTypeError     = NewErrNo(UnexpectedTypeErrorCode, "unexpected type")
 	SensitiveWordsHTTPError = NewErrNo(ServiceErrorCode, "sensitive-words api error")
 	UserNotFoundError       = NewErrNo(ParamErrorCode, "user not found")
+	NotPictureFile          = NewErrNo(ParamErrorCode, "please upload picture")
 )

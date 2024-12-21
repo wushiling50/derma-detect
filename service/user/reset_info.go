@@ -1,4 +1,4 @@
-package service
+package user
 
 import (
 	"context"
@@ -13,13 +13,11 @@ func (s *UserService) ResetInfo(req *api.ResetInfoRequest, userID int64) error {
 		return err
 	}
 
-	return db.ResetInfo(s.ctx, userModel)
+	return db.ResetInfo(s.ctx, userID, userModel)
 }
 
 func compareInfo(ctx context.Context, id int64, req *api.ResetInfoRequest) (*db.User, error) {
-	userModel := &db.User{
-		Id: id,
-	}
+	userModel := &db.User{}
 
 	oldInfo, err := db.GetUserByID(ctx, id)
 	if err != nil {

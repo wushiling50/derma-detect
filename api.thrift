@@ -79,7 +79,7 @@ struct ResetPasswordResponse {
 
 struct UploadAvatarRequest {
     1: required string token,
-    2: required binary avatar,
+    // 2: required binary avatar,
 }
 
 struct UploadAvatarResponse {
@@ -90,7 +90,7 @@ struct UploadAvatarResponse {
 
 struct UploadPictureRequest {
     1: required string token,
-    2: required binary picture,
+    // 2: required binary picture,
 }
 
 struct UploadPictureResponse {

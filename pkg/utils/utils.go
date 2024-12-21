@@ -4,6 +4,7 @@ import (
 	"derma/detect/config"
 	"derma/detect/pkg/errno"
 	"fmt"
+	"mime/multipart"
 	"regexp"
 	"strconv"
 	"strings"
@@ -32,7 +33,7 @@ func CheckPhoneNum(phone int64) error {
 
 	matched := re.MatchString(s)
 	if !matched {
-		return errno.EamilFormatError
+		return errno.PhoneFormatError
 	}
 
 	return nil
@@ -66,4 +67,25 @@ func GeneratePictureName(userID int64) string {
 	year, month, day := currentTime.Date()
 	hour, minute := currentTime.Hour(), currentTime.Minute()
 	return fmt.Sprintf("%v_%d%02d%02d_%02d%02d_picture.jpg", userID, year, month, day, hour, minute)
+}
+
+func GetAvatarURL(objectKey string) string {
+	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
+}
+
+func IsPictureFile(header *multipart.FileHeader) bool {
+	contentType := header.Header.Get("Content-Type")
+	if strings.HasPrefix(contentType, "image/") {
+		return true
+	}
+
+	filename := header.Filename
+	extensions := []string{".jpg", ".jpeg", ".png", ".gif"} // Add more picture extensions if needed
+	for _, ext := range extensions {
+		if strings.HasSuffix(strings.ToLower(filename), ext) {
+			return true
+		}
+	}
+
+	return false
 }

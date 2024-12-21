@@ -1,4 +1,4 @@
-package service
+package user
 
 import (
 	api "derma/detect/biz/model/api"

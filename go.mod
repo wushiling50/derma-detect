@@ -9,6 +9,7 @@ require (
 	github.com/apache/thrift v0.0.0-00010101000000-000000000000
 	github.com/cloudwego/hertz v0.9.3
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/h2non/filetype v1.1.3
 	github.com/spf13/viper v1.19.0
 	golang.org/x/crypto v0.21.0
 	gorm.io/driver/mysql v1.5.7

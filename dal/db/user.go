@@ -79,9 +79,9 @@ func GetUserByID(ctx context.Context, userid int64) (*User, error) {
 	return userResp, nil
 }
 
-func ResetInfo(ctx context.Context, userModel *User) error {
-	err := DB.Save(userModel).Error
-
+func ResetInfo(ctx context.Context, userid int64, userModel *User) error {
+	err := DB.WithContext(ctx).Model(User{}).
+		Where("id = ?", userid).Updates(&userModel).Error
 	if err != nil {
 		// add some logs
 

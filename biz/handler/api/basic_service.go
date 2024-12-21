@@ -4,11 +4,14 @@ package api
 
 import (
 	"context"
+	"io"
 
 	api "derma/detect/biz/model/api"
 	"derma/detect/pack"
 	"derma/detect/pkg/errno"
 	"derma/detect/pkg/utils"
+
+	"github.com/h2non/filetype"
 
 	user "derma/detect/service/user"
 
@@ -232,6 +235,34 @@ func UploadAvatar(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	// check avatar file
+	file, err := c.FormFile("avatar")
+	if err != nil {
+		pack.SendFailResponse(c, errno.AvatarUploadError)
+		return
+	}
+
+	if !utils.IsPictureFile(file) {
+		pack.SendFailResponse(c, errno.NotPictureFile)
+		return
+	}
+
+	fileContent, err := file.Open()
+	if err != nil {
+		pack.SendFailResponse(c, errno.AvatarUploadError)
+		return
+	}
+
+	byteContainer, err := io.ReadAll(fileContent)
+	if err != nil {
+		pack.SendFailResponse(c, errno.AvatarUploadError)
+		return
+	}
+
+	if !filetype.IsImage(byteContainer) {
+		pack.SendFailResponse(c, errno.NotPictureFile)
+	}
+
 	resp := new(api.UploadAvatarResponse)
 	// 对传入的数据做判断
 	claim, err := utils.CheckToken(req.Token)
@@ -241,7 +272,7 @@ func UploadAvatar(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 发给业务层
-	url, err := user.NewUserService(ctx).UploadAvatar(&req, claim.UserId)
+	url, err := user.NewUserService(ctx).UploadAvatar(byteContainer, claim.UserId)
 	if err != nil {
 		pack.SendFailResponse(c, err)
 		return

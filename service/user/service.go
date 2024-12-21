@@ -1,4 +1,4 @@
-package service
+package user
 
 import (
 	"context"
@@ -19,10 +19,12 @@ func NewUserService(ctx context.Context) *UserService {
 	if config.OSS == nil {
 		return &UserService{ctx: ctx, bucket: nil}
 	}
-	client, err := oss.New(config.OSS.Endpoint, config.OSS.AccessKeyID, config.OSS.AccessKeySecret, oss.UseCname(true))
+
+	client, err := oss.New("https://"+config.OSS.BucketName+"."+config.OSS.Endpoint, config.OSS.AccessKeyID, config.OSS.AccessKeySecret, oss.UseCname(true))
 	if err != nil {
 		hlog.Fatal(err)
 	}
+
 	bucket, err := client.Bucket(config.OSS.BucketName)
 	if err != nil {
 		hlog.Fatal(err)

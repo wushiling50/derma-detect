@@ -7,7 +7,7 @@ create table `derma`.`user`
     `signature`        varchar(255) default 'NOT NULL BUT SEEMS NULL'                               not null comment '255charmax',
     `email`            varchar(255)                                                                 not null,
     `phone`            bigint                                                                       not null,
-    `birth`            date                                                                         not null,
+    `birth`            date         default '2006-03-02'                                                                    not null,
     `created_at`       timestamp    default current_timestamp                                       not null,
     `updated_at`       timestamp    default current_timestamp                                       not null on update current_timestamp comment 'update profile time',
     `deleted_at`       timestamp    default null null,

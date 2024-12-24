@@ -44,9 +44,8 @@ func UserHistory(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
-	// resp.PictureList = pack.Picture(userResp)
 	for _, v := range pictureResp {
-		resp.PictureList = append(resp.PictureList, pack.HistoryPicture(v))
+		resp.PictureList = append(resp.PictureList, pack.Picture(v))
 	}
 
 	pack.SendResponse(c, resp)
@@ -63,8 +62,8 @@ func UploadPicture(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	// check avatar file
-	file, err := c.FormFile("avatar")
+	// check picture file
+	file, err := c.FormFile("picture")
 	if err != nil {
 		pack.SendFailResponse(c, errno.PictureUploadError)
 		return
@@ -91,14 +90,61 @@ func UploadPicture(ctx context.Context, c *app.RequestContext) {
 		pack.SendFailResponse(c, errno.NotPictureFile)
 	}
 
-	// TODO
 	resp := new(api.UploadPictureResponse)
 	// 对传入的数据做判断
-	// claim, err := utils.CheckToken(req.Token)
-	// if err != nil {
-	// 	pack.SendFailResponse(c, err)
-	// 	return
-	// }
+	claim, err := utils.CheckToken(req.Token)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	// 发给业务层
+	pictureResp, detectionsResp, err := picture.NewPictureService(ctx).UploadPicture(byteContainer, claim.UserId)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
+	resp.Picture = pack.Picture(pictureResp)
+	for _, v := range detectionsResp {
+		resp.DetectionList = append(resp.DetectionList, pack.Detection(v))
+	}
+
+	pack.SendResponse(c, resp)
+}
+
+// HistoryInfo .
+// @router /derma/detect/picture/history/info/ [GET]
+func HistoryInfo(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.HistoryInfoRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp := new(api.HistoryInfoResponse)
+
+	// 对传入的数据做判断
+	claim, err := utils.CheckToken(req.Token)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	pictureResp, detectionsResp, err := picture.NewPictureService(ctx).GetInfo(claim.UserId, req.PictureID)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
+	resp.Picture = pack.Picture(pictureResp)
+	for _, v := range detectionsResp {
+		resp.DetectionList = append(resp.DetectionList, pack.Detection(v))
+	}
 
 	pack.SendResponse(c, resp)
 }

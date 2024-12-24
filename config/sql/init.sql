@@ -20,8 +20,6 @@ create table `derma`.`picture`
     `id`              bigint                              not null,
     `user_id`         bigint                              not null,
     `picture_url`     varchar(255)                        not null comment 'url',
-    `percent`         varchar(255)                        not null,
-    `describe`        varchar(255)                        not null,
     `created_at`      timestamp default current_timestamp not null,
     `updated_at`      timestamp default current_timestamp not null on update current_timestamp comment 'update profile time',
     `deleted_at`      timestamp default null null,
@@ -30,5 +28,28 @@ create table `derma`.`picture`
     constraint `picture_user`
         foreign key (`user_id`)
             references `derma`.`user` (`id`)
+            on delete cascade
+)engine=InnoDB default charset=utf8mb4;
+
+create table `derma`.`detection`
+(
+    `id`              bigint                              not null,
+    `user_id`         bigint                              not null,
+    `picture_id`      bigint                              not null,
+    `detection_url`   varchar(255)                        not null comment 'url',
+    `percent`         varchar(255)                        not null,
+    `describe`        varchar(255)                        not null,
+    `created_at`      timestamp default current_timestamp not null,
+    `updated_at`      timestamp default current_timestamp not null on update current_timestamp comment 'update profile time',
+    `deleted_at`      timestamp default null null,
+    constraint `id`
+        primary key (`id`),
+    constraint `detection_user`
+        foreign key (`user_id`)
+            references `derma`.`user` (`id`)
+            on delete cascade,
+    constraint `detection_picture`
+        foreign key (`picture_id`)
+            references `derma`.`picture` (`id`)
             on delete cascade
 )engine=InnoDB default charset=utf8mb4;

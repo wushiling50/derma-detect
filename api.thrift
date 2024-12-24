@@ -14,8 +14,13 @@ struct Picture {
     1: i64 id,
     2: string picture_url,
     3: string create_date,
-    4: string percent,
-    5: string describe,
+}
+
+struct Detection {
+    1: i64 id,
+    2: string picture_url,
+    3: string percent,
+    4: string describe,
 }
 
 struct UserRegisterRequest {
@@ -96,7 +101,8 @@ struct UploadPictureRequest {
 struct UploadPictureResponse {
     1: required i64 status_code = 0,
     2: optional string status_msg,
-    3: required list<Picture> result_list,
+    3: required Picture picture,
+    4: required list<Detection> detection_list,
 }
 
 struct HistoryRequest {
@@ -107,6 +113,29 @@ struct HistoryResponse {
     1: required i64 status_code = 0,
     2: optional string status_msg,
     3: required list<Picture> picture_list,
+}
+
+struct HistoryInfoRequest {
+    1: required string token,
+    2: required i64 picture_id,
+}
+
+struct HistoryInfoResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required Picture picture,
+    4: required list<Detection> detection_list,
+}
+
+struct AiDoctorRequest {
+    1: required string token,
+    2: required string question,
+}
+
+struct AiDoctorResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required string reply,
 }
 
 service BasicService {
@@ -123,4 +152,9 @@ service BasicService {
 service PictureService {
     HistoryResponse UserHistory(1: HistoryRequest req) (api.get="/derma/detect/picture/history/")
     UploadPictureResponse UploadPicture(1: UploadPictureRequest req) (api.post="/derma/detect/picture/upload/")
+    HistoryInfoResponse HistoryInfo(1: HistoryInfoRequest req) (api.get="/derma/detect/picture/history/info/")
+}
+
+service AiDoctorService {
+    AiDoctorResponse AIDoctor(1: AiDoctorRequest req) (api.get="/derma/detect/ai-doctor")
 }

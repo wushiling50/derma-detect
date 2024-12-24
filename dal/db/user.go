@@ -27,7 +27,7 @@ func CreateUser(ctx context.Context, user *User) (*User, error) {
 	userResp := new(User)
 
 	user.Id = SF.NextVal()
-	err := DB.WithContext(ctx).Where("username = ?", user.Username).First(&userResp).Error
+	err := DBUser.WithContext(ctx).Where("username = ?", user.Username).First(&userResp).Error
 
 	if err == nil {
 		return nil, errno.UserExistedError
@@ -37,7 +37,7 @@ func CreateUser(ctx context.Context, user *User) (*User, error) {
 		return nil, err
 	}
 
-	if err := DB.WithContext(ctx).Create(user).Error; err != nil {
+	if err := DBUser.WithContext(ctx).Create(user).Error; err != nil {
 		// add some logs
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func CreateUser(ctx context.Context, user *User) (*User, error) {
 func GetUserByUsername(ctx context.Context, username string) (*User, error) {
 	userResp := new(User)
 
-	err := DB.WithContext(ctx).Where("username = ?", username).First(&userResp).Error
+	err := DBUser.WithContext(ctx).Where("username = ?", username).First(&userResp).Error
 
 	if err != nil {
 		// add some logs
@@ -65,7 +65,7 @@ func GetUserByUsername(ctx context.Context, username string) (*User, error) {
 func GetUserByID(ctx context.Context, userid int64) (*User, error) {
 	userResp := new(User)
 
-	err := DB.WithContext(ctx).Where("id = ?", userid).First(&userResp).Error
+	err := DBUser.WithContext(ctx).Where("id = ?", userid).First(&userResp).Error
 
 	if err != nil {
 		// add some logs
@@ -80,7 +80,7 @@ func GetUserByID(ctx context.Context, userid int64) (*User, error) {
 }
 
 func ResetInfo(ctx context.Context, userid int64, userModel *User) error {
-	err := DB.WithContext(ctx).Model(User{}).
+	err := DBUser.WithContext(ctx).Model(User{}).
 		Where("id = ?", userid).Updates(&userModel).Error
 	if err != nil {
 		// add some logs
@@ -94,7 +94,7 @@ func ResetInfo(ctx context.Context, userid int64, userModel *User) error {
 }
 
 func ResetPassword(ctx context.Context, id int64, password string) error {
-	err := DB.WithContext(ctx).Model(&User{}).Where("id= ?", id).
+	err := DBUser.WithContext(ctx).Model(&User{}).Where("id= ?", id).
 		Update("password", password).Error
 
 	if err != nil {
@@ -109,7 +109,7 @@ func ResetPassword(ctx context.Context, id int64, password string) error {
 }
 
 func RestAvatar(ctx context.Context, id int64, url string) error {
-	err := DB.WithContext(ctx).Model(&User{}).Where("id= ?", id).
+	err := DBUser.WithContext(ctx).Model(&User{}).Where("id= ?", id).
 		Update("avatar", url).Error
 
 	if err != nil {

@@ -17,9 +17,12 @@ const (
 	ConnMaxLifetime = 10 * time.Second
 
 	// db table name
-	UserTableName = "user"
+	UserTableName      = "user"
+	PictureTableName   = "picture"
+	DetectionTableName = "detection"
 
 	// oss
-	AvatarMainDir  = "avatar"
-	PictureMainDir = "picture"
+	AvatarMainDir    = "avatar"
+	PictureMainDir   = "picture"
+	DetectionMainDir = "detection"
 )

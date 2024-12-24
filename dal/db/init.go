@@ -11,7 +11,13 @@ import (
 	gormopentracing "gorm.io/plugin/opentracing"
 )
 
-var DB *gorm.DB
+var (
+	DB          *gorm.DB
+	DBUser      *gorm.DB
+	DBPicture   *gorm.DB
+	DBDetection *gorm.DB
+)
+
 var SF *utils.Snowflake
 
 func InitDB() {
@@ -45,7 +51,9 @@ func InitDB() {
 	sqlDB.SetMaxOpenConns(constants.MaxConnections)     // 最大连接数
 	sqlDB.SetConnMaxLifetime(constants.ConnMaxLifetime) // 最大连接时间
 
-	DB = DB.Table(constants.UserTableName)
+	DBUser = DB.Table(constants.UserTableName)
+	DBPicture = DB.Table(constants.PictureTableName)
+	DBDetection = DB.Table(constants.DetectionTableName)
 
 	if SF, err = utils.NewSnowflake(constants.SnowflakeDatacenterID, constants.SnowflakeWorkerID); err != nil {
 		panic(err)

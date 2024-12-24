@@ -73,6 +73,14 @@ func GetAvatarURL(objectKey string) string {
 	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
 }
 
+func GetPictureURL(objectKey string) string {
+	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
+}
+
+func GetDetectionURL(objectKey string) string {
+	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
+}
+
 func IsPictureFile(header *multipart.FileHeader) bool {
 	contentType := header.Header.Get("Content-Type")
 	if strings.HasPrefix(contentType, "image/") {

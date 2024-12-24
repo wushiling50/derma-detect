@@ -110,3 +110,18 @@ func _uploadavatarMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _historyinfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _info0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _aidoctorMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

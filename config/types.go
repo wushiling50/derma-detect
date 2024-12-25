@@ -1,10 +1,10 @@
 package config
 
-import "github.com/spf13/viper"
-
 var (
-	OSS   *oss
-	MYSQL *mysql
+	OSS      *oss
+	MYSQL    *mysql
+	REDIS    *redis
+	RABBITMQ *rabbitMQ
 )
 
 type mysql struct {
@@ -24,20 +24,13 @@ type oss struct {
 	BucketName      string
 }
 
-func OssInit() {
-	OSS = &oss{}
-	OSS.Endpoint = viper.GetString("oss.endpoint")
-	OSS.AccessKeyID = viper.GetString("oss.accessKey-id")
-	OSS.AccessKeySecret = viper.GetString("oss.accessKey-secret")
-	OSS.BucketName = viper.GetString("oss.bucketname")
+type redis struct {
+	Addr     string
+	Password string
 }
 
-func MysqlInit() {
-	MYSQL = &mysql{}
-	MYSQL.Host = viper.GetString("mysql.host")
-	MYSQL.Port = viper.GetString("mysql.port")
-	MYSQL.DbName = viper.GetString("mysql.dbName")
-	MYSQL.Username = viper.GetString("mysql.username")
-	MYSQL.Password = viper.GetString("mysql.password")
-	MYSQL.Charset = viper.GetString("mysql.charset")
+type rabbitMQ struct {
+	Addr     string
+	Username string
+	Password string
 }

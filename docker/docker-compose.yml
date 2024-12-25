@@ -8,9 +8,34 @@ services:
         volumes:
             - ../config/sql:/docker-entrypoint-initdb.d/
             - ./data/mysql:/var/lib/mysql
-            - ../config/sql/my.cnf:/etc/my.cnf
+            # - ../config/sql/my.cnf:/etc/my.cnf
         ports:
             - 3306:3306
+        networks:
+            - derma
+
+    redis:
+        container_name: redis
+        image: redis:bookworm # 选择使用 redis 官方的 bookworm tag
+        volumes:
+            - ./data/redis:/data
+        ports:
+            - 6379:6379
+        env_file:
+            - "./env/redis.env"
+        networks:
+            - derma
+
+    rabbitmq:
+        container_name: rabiitmq
+        image: rabbitmq:latest
+        ports:
+            - 5672:5672
+            - 15672:15672
+        env_file:
+            - "./env/redis.env"
+        volumes:
+            - ./data/rabbitmq:/var/lib/rabbitmq
         networks:
             - derma
 

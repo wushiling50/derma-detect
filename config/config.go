@@ -19,6 +19,39 @@ func InitConfig() {
 }
 
 func Init() {
-	MysqlInit()
-	OssInit()
+	mysqlInit()
+	ossInit()
+	redisInit()
+	rabbitMQInit()
+}
+
+func ossInit() {
+	OSS = &oss{}
+	OSS.Endpoint = viper.GetString("oss.endpoint")
+	OSS.AccessKeyID = viper.GetString("oss.accessKey-id")
+	OSS.AccessKeySecret = viper.GetString("oss.accessKey-secret")
+	OSS.BucketName = viper.GetString("oss.bucketname")
+}
+
+func mysqlInit() {
+	MYSQL = &mysql{}
+	MYSQL.Host = viper.GetString("mysql.host")
+	MYSQL.Port = viper.GetString("mysql.port")
+	MYSQL.DbName = viper.GetString("mysql.dbName")
+	MYSQL.Username = viper.GetString("mysql.username")
+	MYSQL.Password = viper.GetString("mysql.password")
+	MYSQL.Charset = viper.GetString("mysql.charset")
+}
+
+func redisInit() {
+	REDIS = &redis{}
+	REDIS.Addr = viper.GetString("redis.addr")
+	REDIS.Password = viper.GetString("redis.password")
+}
+
+func rabbitMQInit() {
+	RABBITMQ = &rabbitMQ{}
+	RABBITMQ.Addr = viper.GetString("rabbitmq.addr")
+	RABBITMQ.Username = viper.GetString("rabbitmq.username")
+	RABBITMQ.Password = viper.GetString("rabbitmq.password")
 }

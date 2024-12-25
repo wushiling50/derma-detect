@@ -12,6 +12,15 @@ mysql:
   password: derma
   charset: utf8mb4
 
+rabbitmq:
+  addr: 127.0.0.1:5672
+  username: derma
+  password: derma
+
+redis:
+  addr: 127.0.0.1:6379
+  password: derma
+
 oss:
   endpoint: 
   accessKey-id: 

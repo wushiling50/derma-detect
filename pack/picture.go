@@ -8,7 +8,7 @@ import (
 
 func Picture(picture *db.Picture) *api.Picture {
 	y, m, d := picture.CreatedAt.Date()
-	date := fmt.Sprintf("%v-%v-%v", y, m, d)
+	date := fmt.Sprintf("%v-%v-%v", y, int(m), d)
 	return &api.Picture{
 		ID:         picture.Id,
 		PictureURL: picture.Picture_url,

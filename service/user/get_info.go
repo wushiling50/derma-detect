@@ -7,5 +7,10 @@ import (
 )
 
 func (s *UserService) GetInfo(req *api.UserInfoRequest, userID int64) (*db.User, error) {
-	return db.GetUserByID(s.ctx, userID)
+	user, err := db.GetUserByID(s.ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }

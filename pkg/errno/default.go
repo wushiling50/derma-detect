@@ -20,9 +20,16 @@ var (
 	// Picture
 	PictureUploadError = NewErrNo(FileErrorCode, "image upload error")
 
+	// article
+	TitleEmptyError         = NewErrNo(ParamErrorCode, "title is empty")
+	ContentTooFewWordsError = NewErrNo(ParamErrorCode, "content too few words")
+	CoverEmptyError         = NewErrNo(ParamErrorCode, "cover is empty")
+
 	// other
 	UnexpectedTypeError     = NewErrNo(UnexpectedTypeErrorCode, "unexpected type")
 	SensitiveWordsHTTPError = NewErrNo(ServiceErrorCode, "sensitive-words api error")
 	UserNotFoundError       = NewErrNo(ParamErrorCode, "user not found")
-	NotPictureFile          = NewErrNo(ParamErrorCode, "please upload picture")
+	ArticleNotFoundError    = NewErrNo(ParamErrorCode, "article not found")
+	NotPictureFileError     = NewErrNo(ParamErrorCode, "please upload picture")
+	FileSizeError           = NewErrNo(ParamErrorCode, "file size too large")
 )

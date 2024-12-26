@@ -125,3 +125,63 @@ func _aidoctorMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _articleMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _article_detailMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _articledetailMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _articlesMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _articlelistMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _delete_articleMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _artilcedeleteMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _publishMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _publish0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _upload_coverMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _uploadcoverMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _articledeleteMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

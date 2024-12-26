@@ -53,3 +53,21 @@ create table `derma`.`detection`
             references `derma`.`picture` (`id`)
             on delete cascade
 )engine=InnoDB default charset=utf8mb4;
+
+create table `derma`.`article`
+(
+    `id`              bigint                              not null,
+    `user_id`         bigint                              not null,
+    `title`           varchar(255)                        not null,
+    `content`         text                                not null,
+    `cover_url`       varchar(255)                        not null comment 'url',
+    `created_at`      timestamp default current_timestamp not null,
+    `updated_at`      timestamp default current_timestamp not null on update current_timestamp comment 'update profile time',
+    `deleted_at`      timestamp default null null,
+    constraint `id`
+        primary key (`id`),
+    constraint `article_user`
+        foreign key (`user_id`)
+            references `derma`.`user` (`id`)
+            on delete cascade
+)engine=InnoDB default charset=utf8mb4;

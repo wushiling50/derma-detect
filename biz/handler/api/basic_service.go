@@ -243,7 +243,12 @@ func UploadAvatar(ctx context.Context, c *app.RequestContext) {
 	}
 
 	if !utils.IsPictureFile(file) {
-		pack.SendFailResponse(c, errno.NotPictureFile)
+		pack.SendFailResponse(c, errno.NotPictureFileError)
+		return
+	}
+
+	if !utils.CheckFileSize(file) {
+		pack.SendFailResponse(c, errno.FileSizeError)
 		return
 	}
 
@@ -260,7 +265,8 @@ func UploadAvatar(ctx context.Context, c *app.RequestContext) {
 	}
 
 	if !filetype.IsImage(byteContainer) {
-		pack.SendFailResponse(c, errno.NotPictureFile)
+		pack.SendFailResponse(c, errno.NotPictureFileError)
+		return
 	}
 
 	resp := new(api.UploadAvatarResponse)

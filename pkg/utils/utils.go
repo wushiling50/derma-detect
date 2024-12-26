@@ -2,6 +2,7 @@ package utils
 
 import (
 	"derma/detect/config"
+	"derma/detect/pkg/constants"
 	"derma/detect/pkg/errno"
 	"fmt"
 	"mime/multipart"
@@ -69,6 +70,14 @@ func GeneratePictureName(userID int64) string {
 	return fmt.Sprintf("%v_%d%02d%02d_%02d%02d_picture.jpg", userID, year, month, day, hour, minute)
 }
 
+func GenerateCoverName(userID int64) string {
+	currentTime := time.Now()
+	// 获取年月日和小时分钟
+	year, month, day := currentTime.Date()
+	hour, minute := currentTime.Hour(), currentTime.Minute()
+	return fmt.Sprintf("%v_%d%02d%02d_%02d%02d_cover.jpg", userID, year, month, day, hour, minute)
+}
+
 func GetAvatarURL(objectKey string) string {
 	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
 }
@@ -78,6 +87,10 @@ func GetPictureURL(objectKey string) string {
 }
 
 func GetDetectionURL(objectKey string) string {
+	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
+}
+
+func GetCoverURL(objectKey string) string {
 	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
 }
 
@@ -96,4 +109,8 @@ func IsPictureFile(header *multipart.FileHeader) bool {
 	}
 
 	return false
+}
+
+func CheckFileSize(header *multipart.FileHeader) bool {
+	return header.Size <= constants.MaxFileSize
 }

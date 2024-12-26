@@ -16,6 +16,7 @@ var (
 	DBUser      *gorm.DB
 	DBPicture   *gorm.DB
 	DBDetection *gorm.DB
+	DBArticle   *gorm.DB
 )
 
 var SF *utils.Snowflake
@@ -54,6 +55,7 @@ func InitDB() {
 	DBUser = DB.Table(constants.UserTableName)
 	DBPicture = DB.Table(constants.PictureTableName)
 	DBDetection = DB.Table(constants.DetectionTableName)
+	DBArticle = DB.Table(constants.ArticleTableName)
 
 	if SF, err = utils.NewSnowflake(constants.SnowflakeDatacenterID, constants.SnowflakeWorkerID); err != nil {
 		panic(err)

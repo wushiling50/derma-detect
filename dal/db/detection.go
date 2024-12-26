@@ -36,13 +36,14 @@ func CreateDetection(ctx context.Context, detection []*Detection) ([]*Detection,
 func GetDetectionById(ctx context.Context, pictureId int64, userId int64) ([]*Detection, error) {
 	resp := make([]*Detection, 0)
 
-	err := DBDetection.WithContext(ctx).Where("id = ? AND picture_id = ?", userId, pictureId).
+	err := DBDetection.WithContext(ctx).Where("user_id = ? AND picture_id = ?", userId, pictureId).
 		Order("created_at desc").Find(&resp).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errors.New("Picture not found")
+			return nil, errors.New("Detection not found")
 		}
 		return nil, err
 	}
+
 	return resp, nil
 }

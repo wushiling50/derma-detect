@@ -23,6 +23,15 @@ struct Detection {
     4: string describe,
 }
 
+struct Article {
+    1: i64 id,
+    2: string title,
+    3: string content,
+    4: string cover,
+    5: string publish_time,
+    6: string author,
+}
+
 struct UserRegisterRequest {
     1: required string username,
     2: required string password,
@@ -127,6 +136,61 @@ struct HistoryInfoResponse {
     4: required list<Detection> detection_list,
 }
 
+struct PublishRequest {
+    1: required string token,
+    2: required string title,
+    3: required string content,
+    4: required string cover,
+}
+
+struct PublishResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required i64 article_id,
+}
+
+struct UploadCoverRequest {
+    1: required string token,
+}
+
+struct UploadCoverResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required string cover_url,
+}
+
+struct ArticleListRequest {
+    1: required string token,
+    2: required i64 page_num,
+}
+
+struct ArticleListResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required list<Article> article_list,
+}
+
+struct ArticleDetailRequest {
+    1: required string token,
+    2: required i64 article_id,
+}
+
+struct ArticleDetailResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+    3: required Article article,
+}
+
+struct ArticleDeleteRequest {
+    1: required string token,
+    2: required i64 article_id,
+}
+
+struct ArticleDeleteResponse {
+    1: required i64 status_code = 0,
+    2: optional string status_msg,
+}
+
 struct AiDoctorRequest {
     1: required string token,
     2: required string question,
@@ -153,6 +217,16 @@ service PictureService {
     HistoryResponse UserHistory(1: HistoryRequest req) (api.get="/derma/detect/picture/history/")
     UploadPictureResponse UploadPicture(1: UploadPictureRequest req) (api.post="/derma/detect/picture/upload/")
     HistoryInfoResponse HistoryInfo(1: HistoryInfoRequest req) (api.get="/derma/detect/picture/history/info/")
+}
+
+service ArticleService {
+    PublishResponse Publish(1: PublishRequest req) (api.post="/derma/detect/article/publish/")
+    UploadCoverResponse UploadCover(1: UploadCoverRequest req)(api.post="/derma/detect/article/upload-cover/")
+
+    ArticleListResponse ArticleList(1: ArticleListRequest req)(api.get="/derma/detect/article/articles/")
+
+    ArticleDetailResponse ArticleDetail(1: ArticleDetailRequest req)(api.get="/derma/detect/article/article-detail/")
+    ArticleDeleteResponse ArticleDelete(1: ArticleDeleteRequest req)(api.delete="/derma/detect/article/delete-article/")
 }
 
 service AiDoctorService {

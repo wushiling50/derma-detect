@@ -16,3 +16,8 @@ run:
 .PHONY: update
 update:
 	hz update -idl api.thrift
+
+.PHONY: test
+test:
+	cd ./test/user && go test
+	cd .. 

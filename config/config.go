@@ -55,3 +55,26 @@ func rabbitMQInit() {
 	RABBITMQ.Username = viper.GetString("rabbitmq.username")
 	RABBITMQ.Password = viper.GetString("rabbitmq.password")
 }
+
+func InitForTest() {
+	MYSQL = &mysql{
+		DriverName: "mysql",
+		Host:       "127.0.0.1",
+		Port:       "3306",
+		DbName:     "derma",
+		Username:   "derma",
+		Password:   "derma",
+		Charset:    "utf8mb4",
+	}
+
+	RABBITMQ = &rabbitMQ{
+		Addr:     "127.0.0.1:5672",
+		Username: "tiktok",
+		Password: "tiktok",
+	}
+
+	REDIS = &redis{
+		Addr:     "127.0.0.1:6379",
+		Password: "tiktok",
+	}
+}

@@ -5,6 +5,7 @@ go 1.21.1
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 
 require (
+	bou.ke/monkey v1.0.2
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/apache/thrift v0.0.0-00010101000000-000000000000
 	github.com/cloudwego/hertz v0.9.3

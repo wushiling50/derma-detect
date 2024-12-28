@@ -101,7 +101,7 @@ func IsPictureFile(header *multipart.FileHeader) bool {
 	}
 
 	filename := header.Filename
-	extensions := []string{".jpg", ".jpeg", ".png", ".gif"} // Add more picture extensions if needed
+	extensions := []string{".jpg", ".jpeg", ".png"} // Add more picture extensions if needed
 	for _, ext := range extensions {
 		if strings.HasSuffix(strings.ToLower(filename), ext) {
 			return true

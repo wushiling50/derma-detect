@@ -29,4 +29,7 @@ const (
 	PictureMainDir   = "picture"
 	DetectionMainDir = "detection"
 	ArticleMainDir   = "article"
+
+	// redis
+	RedisDBArticle = 1
 )

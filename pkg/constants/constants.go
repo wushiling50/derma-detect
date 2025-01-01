@@ -32,4 +32,7 @@ const (
 
 	// redis
 	RedisDBArticle = 1
+
+	// mq
+	ArticleQueueName = "ArticleQueue"
 )

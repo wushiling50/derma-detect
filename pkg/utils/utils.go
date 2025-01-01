@@ -10,6 +10,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 func GetMysqlDSN() string {
@@ -23,6 +25,16 @@ func GetMysqlDSN() string {
 	dsn := strings.Join([]string{username, ":", password, "@tcp(", host, ":", port, ")/", dbName, "?charset=" + charset + "&parseTime=true"}, "")
 
 	return dsn
+}
+
+func GetMQUrl() string {
+	if config.RABBITMQ == nil {
+		hlog.Fatal("config not found")
+	}
+
+	url := strings.Join([]string{"amqp://", config.RABBITMQ.Username, ":", config.RABBITMQ.Password, "@", config.RABBITMQ.Addr, "/"}, "")
+
+	return url
 }
 
 func CheckPhoneNum(phone int64) error {

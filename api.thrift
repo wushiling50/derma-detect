@@ -18,9 +18,8 @@ struct Picture {
 
 struct Detection {
     1: i64 id,
-    2: string picture_url,
+    2: string name,
     3: string percent,
-    4: string describe,
 }
 
 struct Article {

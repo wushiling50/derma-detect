@@ -156,11 +156,6 @@ func _delete_articleMw() []app.HandlerFunc {
 	return nil
 }
 
-func _artilcedeleteMw() []app.HandlerFunc {
-	// your code...
-	return nil
-}
-
 func _publishMw() []app.HandlerFunc {
 	// your code...
 	return nil

@@ -7,8 +7,7 @@ import (
 
 func Detection(detection *db.Detection) *api.Detection {
 	return &api.Detection{
-		PictureURL: detection.Detection_url,
-		Percent:    detection.Percent,
-		Describe:   detection.Describe,
+		Percent: detection.Percent,
+		Name:    detection.Name,
 	}
 }

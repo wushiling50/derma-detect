@@ -5,6 +5,7 @@ var (
 	MYSQL    *mysql
 	REDIS    *redis
 	RABBITMQ *rabbitMQ
+	AISERVER *aiserver
 )
 
 type mysql struct {
@@ -33,4 +34,8 @@ type rabbitMQ struct {
 	Addr     string
 	Username string
 	Password string
+}
+
+type aiserver struct {
+	Addr string
 }

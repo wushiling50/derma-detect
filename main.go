@@ -5,6 +5,7 @@ package main
 import (
 	"derma/detect/config"
 	"derma/detect/dal"
+	aireq "derma/detect/pkg/ai_req"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
@@ -12,6 +13,7 @@ import (
 func Init() {
 	config.InitConfig()
 	dal.Init()
+	aireq.Init()
 }
 
 func main() {

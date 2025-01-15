@@ -196,7 +196,7 @@ func ArticleDetail(ctx context.Context, c *app.RequestContext) {
 	pack.SendResponse(c, resp)
 }
 
-// ArtilceDelete .
+// ArticleDelete .
 // @router /derma/detect/article/delete-article/ [DELETE]
 func ArticleDelete(ctx context.Context, c *app.RequestContext) {
 	var err error

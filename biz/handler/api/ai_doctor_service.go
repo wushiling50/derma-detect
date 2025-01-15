@@ -7,6 +7,8 @@ import (
 
 	api "derma/detect/biz/model/api"
 	"derma/detect/pack"
+	"derma/detect/pkg/utils"
+	aidoctor "derma/detect/service/ai_doctor"
 
 	"github.com/cloudwego/hertz/pkg/app"
 )
@@ -23,6 +25,23 @@ func AIDoctor(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp := new(api.AiDoctorResponse)
+
+	// 对传入的数据做判断
+	_, err = utils.CheckToken(req.Token)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	// 发给业务层
+	reply, err := aidoctor.NewAIDoctorService(ctx).AIDoctor(req)
+	if err != nil {
+		pack.SendFailResponse(c, err)
+		return
+	}
+
+	resp.StatusCode, resp.StatusMsg = pack.BuildBaseResp(nil)
+	resp.Reply = reply
 
 	pack.SendResponse(c, resp)
 }

@@ -23,6 +23,7 @@ func Init() {
 	ossInit()
 	redisInit()
 	rabbitMQInit()
+	aiServerInit()
 }
 
 func ossInit() {
@@ -54,6 +55,11 @@ func rabbitMQInit() {
 	RABBITMQ.Addr = viper.GetString("rabbitmq.addr")
 	RABBITMQ.Username = viper.GetString("rabbitmq.username")
 	RABBITMQ.Password = viper.GetString("rabbitmq.password")
+}
+
+func aiServerInit() {
+	AISERVER = &aiserver{}
+	AISERVER.Addr = viper.GetString("aiserver.addr")
 }
 
 func InitForTest() {

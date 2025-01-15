@@ -36,7 +36,6 @@ create table `derma`.`detection`
     `id`              bigint                              not null,
     `user_id`         bigint                              not null,
     `picture_id`      bigint                              not null,
-    `detection_url`   varchar(255)                        not null comment 'url',
     `percent`         varchar(255)                        not null,
     `describe`        varchar(255)                        not null,
     `created_at`      timestamp default current_timestamp not null,

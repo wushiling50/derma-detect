@@ -631,10 +631,9 @@ func (p *Picture) String() string {
 }
 
 type Detection struct {
-	ID         int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
-	PictureURL string `thrift:"picture_url,2" form:"picture_url" json:"picture_url" query:"picture_url"`
-	Percent    string `thrift:"percent,3" form:"percent" json:"percent" query:"percent"`
-	Describe   string `thrift:"describe,4" form:"describe" json:"describe" query:"describe"`
+	ID      int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
+	Name    string `thrift:"name,2" form:"name" json:"name" query:"name"`
+	Percent string `thrift:"percent,3" form:"percent" json:"percent" query:"percent"`
 }
 
 func NewDetection() *Detection {
@@ -645,23 +644,18 @@ func (p *Detection) GetID() (v int64) {
 	return p.ID
 }
 
-func (p *Detection) GetPictureURL() (v string) {
-	return p.PictureURL
+func (p *Detection) GetName() (v string) {
+	return p.Name
 }
 
 func (p *Detection) GetPercent() (v string) {
 	return p.Percent
 }
 
-func (p *Detection) GetDescribe() (v string) {
-	return p.Describe
-}
-
 var fieldIDToName_Detection = map[int16]string{
 	1: "id",
-	2: "picture_url",
+	2: "name",
 	3: "percent",
-	4: "describe",
 }
 
 func (p *Detection) Read(iprot thrift.TProtocol) (err error) {
@@ -702,14 +696,6 @@ func (p *Detection) Read(iprot thrift.TProtocol) (err error) {
 		case 3:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField3(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 4:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField4(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -758,7 +744,7 @@ func (p *Detection) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.PictureURL = v
+		p.Name = v
 	}
 	return nil
 }
@@ -768,15 +754,6 @@ func (p *Detection) ReadField3(iprot thrift.TProtocol) error {
 		return err
 	} else {
 		p.Percent = v
-	}
-	return nil
-}
-func (p *Detection) ReadField4(iprot thrift.TProtocol) error {
-
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Describe = v
 	}
 	return nil
 }
@@ -797,10 +774,6 @@ func (p *Detection) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField3(oprot); err != nil {
 			fieldId = 3
-			goto WriteFieldError
-		}
-		if err = p.writeField4(oprot); err != nil {
-			fieldId = 4
 			goto WriteFieldError
 		}
 	}
@@ -839,10 +812,10 @@ WriteFieldEndError:
 }
 
 func (p *Detection) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("picture_url", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("name", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.PictureURL); err != nil {
+	if err := oprot.WriteString(p.Name); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -870,23 +843,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
-}
-
-func (p *Detection) writeField4(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("describe", thrift.STRING, 4); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Describe); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
 }
 
 func (p *Detection) String() string {

@@ -9,15 +9,14 @@ import (
 )
 
 type Detection struct {
-	Id            int64
-	User_id       int64
-	Picture_id    int64
-	Detection_url string
-	Percent       string
-	Describe      string
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     gorm.DeletedAt `gorm:"index"`
+	Id         int64
+	User_id    int64
+	Picture_id int64
+	Percent    string
+	Name       string
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+	DeletedAt  gorm.DeletedAt `gorm:"index"`
 }
 
 func CreateDetection(ctx context.Context, detection []*Detection) ([]*Detection, error) {

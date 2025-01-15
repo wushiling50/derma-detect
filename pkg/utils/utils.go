@@ -98,10 +98,6 @@ func GetPictureURL(objectKey string) string {
 	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
 }
 
-func GetDetectionURL(objectKey string) string {
-	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
-}
-
 func GetCoverURL(objectKey string) string {
 	return fmt.Sprintf("https://%s.%s/%s", config.OSS.BucketName, config.OSS.Endpoint, objectKey)
 }
@@ -125,4 +121,8 @@ func IsPictureFile(header *multipart.FileHeader) bool {
 
 func CheckFileSize(header *multipart.FileHeader) bool {
 	return header.Size <= constants.MaxFileSize
+}
+
+func RestorePicture(b []byte) {
+
 }
